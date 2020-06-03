@@ -1,24 +1,34 @@
 syntax = "proto3";
 
-option java_multiple_files = true;
-option java_package = "io.grpc.examples.helloworld";
-option java_outer_classname = "HelloWorldProto";
-option objc_class_prefix = "HLW";
+// How the proto file is converted to C++ code:
+//   - Some rules:
+//       - package Xy -> namespace Xy
+//       - message Xy -> class Xy:
+//                         - If the message Xy has nested the message Wz, then:
+//                             1. Class Xy_Wz is also generated
+//                             2. Inside Xy it is generated 'typedef Xy_Wz Wz;':
+//                                  - So we can use the class Xy_Wz as Xy::Wz 
+//       - service definition Xy -> class Xy with a virtual method for each 'rpc' endpoint defined
+//                               -> subclass Xy_Stub to be used by clients:
+//                                    - A typedef is defined, so Xy_Stub can be referred as Xy::Stub
+//   - More about it:
+//       - https://developers.google.com/protocol-buffers/docs/reference/cpp-generated
 
-package helloworld;
+package jccapstone;
 
-// The greeting service definition.
-service Greeter {
-  // Sends a greeting
-  rpc SayHello (HelloRequest) returns (HelloReply) {}
+// The gRPC service definition.
+service Capstone {
+  // The RPC endpoint
+  rpc CapstoneDone (MsgRequest) returns (MsgReply) {}
 }
 
-// The request message containing the user's name.
-message HelloRequest {
-  string name = 1;
+// The request message containing the message payload
+message MsgRequest {
+  string msg_type = 1;
+  string msg_payload =2;
 }
 
 // The response message containing the greetings
-message HelloReply {
+message MsgReply {
   string message = 1;
 }

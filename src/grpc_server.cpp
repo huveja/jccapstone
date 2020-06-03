@@ -1,9 +1,3 @@
-/*
- *
- * Capstone -> Jorge Couchet
- *
- */
-
 #include <iostream>
 #include <memory>
 #include <string>
@@ -16,47 +10,63 @@
 // Include the gRPC generated header
 #include "jccapstone.grpc.pb.h"
 
+#include "grpc_server.hpp"
+
 using grpc::Server;
 using grpc::ServerBuilder;
 using grpc::ServerContext;
 using grpc::Status;
-using helloworld::HelloRequest;
-using helloworld::HelloReply;
-using helloworld::Greeter;
+using jccapstone::MsgRequest;
+using jccapstone::MsgReply;
+using jccapstone::Capstone;
 
-// Logic and data behind the server's behavior.
-class GreeterServiceImpl final : public Greeter::Service {
-  Status SayHello(ServerContext* context, const HelloRequest* request,
-                  HelloReply* reply) override {
-    std::string prefix("Hello ");
-    reply->set_message(prefix + request->name());
-    return Status::OK;
-  }
-};
+// Custom method that implements the RPC endpoint
+Status CapstoneServiceImpl::CapstoneDone(ServerContext* context, const MsgRequest* request, MsgReply* reply) {
+	// Placeholder for the RPC endpoint's answer
+	std::string msg_answer;
+
+	// Get the message content
+	auto mtype = request->msg_type();
+	auto mpayload = request->msg_payload();
+
+	// Build the message answer
+	if (mtype == "up") {
+		msg_answer = "UP " + mpayload;
+	} else {
+		msg_answer = "DOWN " + mpayload;
+	}
+
+	// Send the answer
+	reply->set_message(msg_answer);
+	return Status::OK;
+}
 
 void RunServer() {
-  std::string server_address("0.0.0.0:50051");
-  GreeterServiceImpl service;
+	std::string server_address("0.0.0.0:50051");
+	CapstoneServiceImpl service;
 
-  grpc::EnableDefaultHealthCheckService(true);
-  grpc::reflection::InitProtoReflectionServerBuilderPlugin();
-  ServerBuilder builder;
-  // Listen on the given address without any authentication mechanism.
-  builder.AddListeningPort(server_address, grpc::InsecureServerCredentials());
-  // Register "service" as the instance through which we'll communicate with
-  // clients. In this case it corresponds to an *synchronous* service.
-  builder.RegisterService(&service);
-  // Finally assemble the server.
-  std::unique_ptr<Server> server(builder.BuildAndStart());
-  std::cout << "Server listening on " << server_address << std::endl;
+	 grpc::EnableDefaultHealthCheckService(true);
+	 grpc::reflection::InitProtoReflectionServerBuilderPlugin();
+	 ServerBuilder builder;
 
-  // Wait for the server to shutdown. Note that some other thread must be
-  // responsible for shutting down the server for this call to ever return.
-  server->Wait();
+	 // Listen on the given address without any authentication mechanism
+	 builder.AddListeningPort(server_address, grpc::InsecureServerCredentials());
+
+	 // Register the "service" as the instance to be used by te clients:
+	 //   - The communication with the client is 'synchronous'
+	 builder.RegisterService(&service);
+
+	 // Build the server
+	 std::unique_ptr<Server> server(builder.BuildAndStart());
+	 std::cout << "Server listening on " << server_address << std::endl;
+
+	 // Wait for the server to shutdown
+	 server->Wait();
 }
 
 int main(int argc, char** argv) {
-  RunServer();
+	// Start the gRPC server
+  	RunServer();
 
-  return 0;
+  	return 0;
 }

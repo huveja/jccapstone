@@ -1,8 +1,3 @@
-#
-# Capstone -> Jorge Couchet
-#
-
-
 cmake_minimum_required(VERSION 3.13)
 
 project(JCCapstone C CXX)
@@ -63,7 +58,6 @@ endif()
 
 
 # Find gRPC installation
-# Looks for gRPCConfig.cmake file installed by gRPC's cmake installation.
 find_package(gRPC CONFIG REQUIRED)
 message(STATUS "*** Using gRPC ${gRPC_VERSION}")
 set(_GRPC_GRPCPP gRPC::grpc++)
@@ -90,7 +84,7 @@ add_custom_command(
         "${hw_proto}"
       DEPENDS "${hw_proto}")
 
-# Include the generated *.pb.h files
+# Include the automatically generated *.pb.h files
 include_directories("${CMAKE_CURRENT_BINARY_DIR}")
 
 # Define the gRPC executable targets
