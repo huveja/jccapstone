@@ -12,22 +12,35 @@
             - https://grpc.io/docs/quickstart/cpp
         - Instructions to install on the Udacity's workspace:
             - 1. Install gRPC:
-                   - cd grpc
-                   - mkdir -p cmake/build
-                   - cd cmake/build
-                   - cmake -DgRPC_INSTALL=ON -DgRPC_BUILD_TESTS=OFF -DCMAKE_INSTALL_PREFIX=$MY_INSTALL_DIR ../..
-                   - make -j4
-                   - make install
+                - cd /home/worspace
+                - git clone --recurse-submodules -b v1.28.1 https://github.com/grpc/grpc
+                - cd grpc
+                - mkdir -p cmake/build
+                - cd cmake/build
+                - cmake -DgRPC_INSTALL=ON -DgRPC_BUILD_TESTS=OFF -DCMAKE_INSTALL_PREFIX=$MY_INSTALL_DIR ../..
+                - make -j4
+                - make install
             - 2. Make sure that the 'protoc' version matches the 'Protobuf' version:
-                   - cd grpc/prot
-                   - cp protoc /usr/bin/protoc
-                       - Answer 'yes' to replace the current version
-                   - protoc --version
-                       - It must be 3.11.2
+                - cd /home/worspace
+                - mkdir prot
+                - cd prot
+                - wget https://github.com/protocolbuffers/protobuf/releases/download/v3.11.2/protoc-3.11.2-linux-x86_64.zip
+                    - It downloads a version of 'protoc' that is compatible with the 'Protobuf' version installed when
+                      GRPC was installed:
+                        - If the versions are not compatible, then the build will fail
+                - unzip protoc-3.11.2-linux-x86_64.zip
+                - which protoc
+                    - It gives the folder where the current 'protoc' binary is located (call it FOLDER_PATH)
+                - cp bin/protoc FOLDER_PATH
+                    - Answer 'yes' to replace the current version
+                    - It copies the new binary to the folder FOLDER_PATH
+                - protoc --version
+                    - It must be 3.11.2
                
             
 - (c). Instructions to build the project on the Udacity's workspace:
     - a. Build:
+        - cd /home/worspace
         - cd jccapstone
         - mkdir -p build
         - cd build
