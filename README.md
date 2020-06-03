@@ -1,10 +1,10 @@
 - (a). General description:
-         - The current capstone implements the option 1, i.e. build a project of my choice
-         - Goal:
-             - Implement a template for C++ gRPC service, where the client is able to launch
-               a new thread for each request, and uses futures/promises to get the answer back
-             - Learn to integrate a third party tool (GRPC here) and become more fluent defining
-               and using the CMake configuration file
+    - The current capstone implements the option 1, i.e. build a project of my choice
+        - Goal:
+            - Implement a template for C++ gRPC service, where the client is able to launch
+              a new thread for each request, and uses futures/promises to get the answer back
+            - Learn to integrate a third party tool (GRPC here) and become more fluent defining
+              and using the CMake configuration file
 
 - (b). Prerequisites:
     - It needs GRPC to work:
@@ -28,18 +28,18 @@
             
 - (c). Instructions to build the project on the Udacity's workspace:
     - a. Build:
-           - cd jccapstone
-           - mkdir -p build
-           - cd build
-           - cmake ..
-           - make -j2
+        - cd jccapstone
+        - mkdir -p build
+        - cd build
+        - cmake ..
+        - make -j2
     - b. Run:
-           - gRPC server:
-               - Open a terminal
-               - Run './build/grpc_server'
-           - gRPC client:
-               - Open another terminal
-               - Run './build/grpc_client'
+        - gRPC server:
+            - Open a terminal
+                - Run './build/grpc_server'
+        - gRPC client:
+            - Open another terminal
+            - Run './build/grpc_client'
 
 
 - (d). Project structure, files, classes and functions description:
@@ -100,37 +100,36 @@
                 - It implements the logic to instantiate and start the gRPC service
 
 - (e). Rubric points addressed:
-         - Loops, Functions, I/O:
-             - 1. The project demonstrates an understanding of C++ functions and control structures:
-                    - 'src/grpc_server.cpp':
-                        - Line 33: control structure
-                        - Line 24 and Line 44: code organized around function (and classes) 
-                    - 'src/grpc_client.cpp':
-                        - Line 45 and Line 61: control structure
-                        - Line 24: code organized around function (and classes)
-         - Object Oriented Programming:
-             - 2. The project code is organized into classes with class attributes to hold the data, 
-                  and class methods to perform tasks:
-                    - 'src/grpc_server.hpp':
-                        - Line 20: Class definition with the above requirements
+    - Loops, Functions, I/O:
+        - 1. The project demonstrates an understanding of C++ functions and control structures:
+            - 'src/grpc_server.cpp':
+                - Line 33: control structure
+                    - Line 24 and Line 44: code organized around function (and classes) 
+            - 'src/grpc_client.cpp':
+                - Line 45 and Line 61: control structure
+                - Line 24: code organized around function (and classes)
+    - Object Oriented Programming:
+        - 2. The project code is organized into classes with class attributes to hold the data, 
+             and class methods to perform tasks:
+            - 'src/grpc_server.hpp':
+                - Line 20: Class definition with the above requirements
+                - 'src/grpc_client.hpp':
+                    - Line 20: Class definition with the above requirements
+        - 3. Classes use appropriate access specifiers for class members:
+            - 'src/grpc_server.hpp':
+                - Line 20: Class definition with the above requirements
                     - 'src/grpc_client.hpp':
                         - Line 20: Class definition with the above requirements
-
-             - 3. Classes use appropriate access specifiers for class members:
-                    - 'src/grpc_server.hpp':
-                        - Line 20: Class definition with the above requirements
-                    - 'src/grpc_client.hpp':
-                        - Line 20: Class definition with the above requirements
-             - 4. Class constructors utilize member initialization lists:
-                    - 'src/grpc_client.hpp':
-                        - Line 24: member initialization list
-             - 5. Derived class functions override virtual base class functions:
-                    - 'src/grpc_server.hpp':
-                        - Line 24: override virtual method
-         - Concurrency:
-             - 6. The project uses multithreading:
-                    - 'src/grpc_client.cpp':
-                        - Line 97: the project uses multiple threads in the execution (main thread and worker thread)
-             - 7. A promise and future is used in the project:
-                    - 'src/grpc_client.cpp':
-                        - Line 92, Line 93, Line 97 and Line 101: A promise and future is used to pass data  
+        - 4. Class constructors utilize member initialization lists:
+               - 'src/grpc_client.hpp':
+                   - Line 24: member initialization list
+        - 5. Derived class functions override virtual base class functions:
+            - 'src/grpc_server.hpp':
+                - Line 24: override virtual method
+    - Concurrency:
+        - 6. The project uses multithreading:
+            - 'src/grpc_client.cpp':
+                - Line 97: the project uses multiple threads in the execution (main thread and worker thread)
+        - 7. A promise and future is used in the project:
+            - 'src/grpc_client.cpp':
+                - Line 92, Line 93, Line 97 and Line 101: A promise and future is used to pass data  
